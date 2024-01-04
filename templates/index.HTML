@@ -14,7 +14,7 @@
         <img src="https://sterilab.com.br/wp-content/uploads/2017/08/logo2.png" alt="">
     </header>
     <div class="container">
-        <form id="impressaoForm" method="POST" action="/">
+        <form id="impressaoForm"  type="submit">
 
 
             <div class="horario">
@@ -45,13 +45,12 @@
             <label for="caminhoPasta">Caminho da Pasta:</label>
             <input type="text" id="caminhoPasta" name="caminhoPasta" placeholder="Caminho da pasta" required>
 
-            <button type="submit" id="agendar">Agendar Impressão</button>
+            <button id="agendar">Agendar Impressão</button>
         </form>
     </div>
     <footer>
         <p>&copy;Sterilab - Todos os direitos reservados - 2023</p>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('static', filename='enviarDados.js') }}"></script>
 </body>
 

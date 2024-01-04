@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sterilab</title>
+
+</head>
+<body>
+
+<h2>Teste de solicitação HTTP</h2>
+
+<button type="button" onclick="sendPostRequest()">Enviar solicitação POST</button>
+
+<script>
+function sendPostRequest() {
+  fetch('/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ "teste": "dados" })
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+</script>
+
+</body>
+</html>

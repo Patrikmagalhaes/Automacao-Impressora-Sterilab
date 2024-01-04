@@ -5,6 +5,7 @@ import win32print
 import win32api
 import os
 from flask import Flask, request, render_template, jsonify
+import threading 
 
 # Determine o caminho base dinamicamente como o diretório do script atual
 base_path = os.path.abspath(os.path.dirname(__file__))
@@ -58,28 +59,22 @@ def selecionar_impressora():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
-# Rota para lidar com as requisições GET e POST para a página inicial
+# Rota para lidar com as requisições GET e POST para a página inicial 
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        try:
-            # Extrai os dados do formulário da requisição POST
-            dia_semana = request.form['diaSemana']
-            hora_programada = request.form['hora']
-            minuto_programado = request.form['minuto']
-            copias = int(request.form['copias'])
-            caminho_pasta = request.form['caminhoPasta']
-            impressora = request.form['impressora']  # Adiciona a impressora selecionada
-
-            # Agendar a impressão com base nos dados do formulário
-            agendar_impressao(dia_semana, hora_programada, minuto_programado, copias, caminho_pasta, impressora)
-
-            return jsonify({'success': True, 'message': 'Impressão agendada com sucesso!'})
-
-        except Exception as e:
-            return jsonify({'success': False, 'message': str(e)})
-
-    return render_template('index.html')
+        data = request.get_json()
+        dia_semana = data['diaSemana']
+        hora = data['hora']
+        minuto = data['minuto']
+        copias = data['copias']
+        caminho = data['caminhoPasta']
+        impressora = data['impressora']
+        thread = threading.Thread(target=agendar_impressao, args=(dia_semana, hora, minuto, copias,  caminho, impressora))
+        thread.start()
+        return jsonify(data), 200
+    else:
+        return render_template('index.html')
 
 # Inicia a aplicação Flask se este script for o principal sendo executado
 if __name__ == "__main__":
