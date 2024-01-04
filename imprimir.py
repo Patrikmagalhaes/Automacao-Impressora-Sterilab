@@ -18,10 +18,13 @@ def imprimir_arquivos(caminho, copias, impressora):
     lista_arquivos = os.listdir(caminho)
 
     for arquivo in lista_arquivos:
-        for _ in range(copias):
+        for _ in range(int(copias)):
             print(f'Imprimindo {arquivo} {copias} vezes na impressora {impressora}')
             # Adiciona a impressora ao comando de impressão
-            win32api.ShellExecute(0, "print", arquivo, None, caminho, 0)
+            try:
+                win32api.ShellExecute(0, "print", arquivo, None, caminho, 0)
+            except Exception as erro:
+                return print()
 
 # Função para agendar a impressão
 def agendar_impressao(dia_semana, hora, minuto, copias, caminho, impressora):
@@ -44,7 +47,7 @@ def agendar_impressao(dia_semana, hora, minuto, copias, caminho, impressora):
             proxima_ocorrencia += timedelta(weeks=1)
             data_agendada = datetime.combine(proxima_ocorrencia.date(), datetime.strptime(f'{hora}:{minuto}', '%H:%M').time())
 
-        time.sleep(1)   # Verificar a cada minuto se é hora de imprimir
+time.sleep(1)   # Verificar a cada minuto se é hora de imprimir
 
 # Rota para selecionar a impressora
 @app.route("/selecionar_impressora", methods=['GET'])
@@ -63,6 +66,7 @@ def selecionar_impressora():
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        
         data = request.get_json()
         dia_semana = data['diaSemana']
         hora = data['hora']
@@ -70,9 +74,10 @@ def index():
         copias = data['copias']
         caminho = data['caminhoPasta']
         impressora = data['impressora']
+        
         thread = threading.Thread(target=agendar_impressao, args=(dia_semana, hora, minuto, copias,  caminho, impressora))
         thread.start()
-        return jsonify(data), 200
+        return jsonify(f"Impressão agendada com sucesso!"), 200
     else:
         return render_template('index.html')
 
