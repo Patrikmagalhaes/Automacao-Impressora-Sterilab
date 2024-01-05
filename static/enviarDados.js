@@ -54,7 +54,8 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
         .then(response => response.json())
         // Lida com os dados JSON da resposta.
         .then(data => {
-            alert(data)
+           const dados = data[1]["diaSemana"]
+           console.log(dados)
         })
         // Captura qualquer erro que possa ocorrer durante a requisição POST ou ao lidar com a resposta.
         .catch(error => {

@@ -10,14 +10,14 @@
 </head>
 
 <body>
+<header>
+    <a href="/lista">porra</a>
+</header>
     <div class="container">
         <form id="impressaoForm"  type="submit">
-
-
             <div class="horario">
                 <h1>AGENDAR IMPRESSÃO</h1>
                 <select id="impressorasSelect" name="impressora">
-                    <!-- As opções serão adicionadas dinamicamente aqui -->
                 </select>
                 <label for="diaSemana">Dia da Semana:</label>
                 <select id="diaSemana" name="diaSemana">
@@ -36,18 +36,11 @@
                 <label for="copias">Quantidade de Cópias:</label>
                 <input type="number" id="copias" name="copias" min="1" placeholder="1" value="2" required>
             </div>
-
-
-
             <label for="caminhoPasta">Caminho da Pasta:</label>
             <input type="text" id="caminhoPasta" name="caminhoPasta" placeholder="Caminho da pasta" required>
-
             <button id="agendar">Agendar Impressão</button>
         </form>
     </div>
-    <footer>
-        <p>&copy;Sterilab - Todos os direitos reservados - 2023</p>
-    </footer>
     <script src="{{ url_for('static', filename='enviarDados.js') }}"></script>
 </body>
 

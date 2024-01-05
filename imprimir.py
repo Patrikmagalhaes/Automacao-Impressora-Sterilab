@@ -16,7 +16,6 @@ app = Flask(__name__, template_folder=os.path.join(base_path, 'templates'), stat
 # Função para imprimir arquivos
 def imprimir_arquivos(caminho, copias, impressora):
     lista_arquivos = os.listdir(caminho)
-
     for arquivo in lista_arquivos:
         for _ in range(int(copias)):
             print(f'Imprimindo {arquivo} {copias} vezes na impressora {impressora}')
@@ -24,21 +23,16 @@ def imprimir_arquivos(caminho, copias, impressora):
             try:
                 win32api.ShellExecute(0, "print", arquivo, None, caminho, 0)
             except Exception as erro:
-                return print()
-
+                return print(erro)
 # Função para agendar a impressão
 def agendar_impressao(dia_semana, hora, minuto, copias, caminho, impressora):
     dias_da_semana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']
     dia_numero = dias_da_semana.index(dia_semana.lower())
-
     hoje = datetime.now()
     hora_atual = hoje.replace(second=0, microsecond=0)
-
     delta_dias = (dia_numero - hoje.weekday() + 7) % 7
     proxima_ocorrencia = hoje + timedelta(days=delta_dias)
-
     data_agendada = datetime.combine(proxima_ocorrencia.date(), datetime.strptime(f'{hora}:{minuto}', '%H:%M').time())
-
     while True:
         agora = datetime.now()
         if agora >= data_agendada:
@@ -46,22 +40,21 @@ def agendar_impressao(dia_semana, hora, minuto, copias, caminho, impressora):
             imprimir_arquivos(caminho, copias, impressora)
             proxima_ocorrencia += timedelta(weeks=1)
             data_agendada = datetime.combine(proxima_ocorrencia.date(), datetime.strptime(f'{hora}:{minuto}', '%H:%M').time())
-
-time.sleep(1)   # Verificar a cada minuto se é hora de imprimir
-
+time.sleep(1) 
+@app.route("/lista", methods=['GET'])
+def lista():
+    if request.method == 'GET':
+        return render_template("lista.html")
 # Rota para selecionar a impressora
 @app.route("/selecionar_impressora", methods=['GET'])
 def selecionar_impressora():
     try:
         # Lista as impressoras disponíveis
         lista_impressoras = win32print.EnumPrinters(2)
-
         # Retorna a lista de impressoras como JSON
         return jsonify({'impressoras': [printer[2] for printer in lista_impressoras], 'success': True})
-
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
-
 # Rota para lidar com as requisições GET e POST para a página inicial 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -77,10 +70,10 @@ def index():
         
         thread = threading.Thread(target=agendar_impressao, args=(dia_semana, hora, minuto, copias,  caminho, impressora))
         thread.start()
-        return jsonify(f"Impressão agendada com sucesso!"), 200
+        return jsonify(f"Impressão agendada com sucesso!", data), 200
     else:
         return render_template('index.html')
 
 # Inicia a aplicação Flask se este script for o principal sendo executado
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug = True)
