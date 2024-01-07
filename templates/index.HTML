@@ -13,7 +13,9 @@
 <header>
     <a href="/lista">porra</a>
 </header>
-    <div class="container">
+<div id="lista">
+    <h2 id="test"></h2>
+  </div>
         <form id="impressaoForm"  type="submit">
             <div class="horario">
                 <h1>AGENDAR IMPRESSÃO</h1>
@@ -36,8 +38,8 @@
                 <label for="copias">Quantidade de Cópias:</label>
                 <input type="number" id="copias" name="copias" min="1" placeholder="1" value="2" required>
             </div>
-            <label for="caminhoPasta">Caminho da Pasta:</label>
-            <input type="text" id="caminhoPasta" name="caminhoPasta" placeholder="Caminho da pasta" required>
+            <label for="caminhoPasta" >Caminho da Pasta:</label>
+            <input type="text" value="teste" id="caminhoPasta" name="caminhoPasta" placeholder="Caminho da pasta" required>
             <button id="agendar">Agendar Impressão</button>
         </form>
     </div>
