@@ -1,7 +1,19 @@
-import {dados} from "./enviarDados"
+let arrayObejetos = []
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener("DOMContentLoaded", ()=>{
-   let dadosLocal = localStorage.getItem(dados.nomeTarefa)
-   console.log(dadosLocal)
+   for (let chave of Object.keys(localStorage)) {
+      valor = JSON.parse(localStorage.getItem(chave))
+      arrayObejetos.push(valor)
+   }
+
+   for (i = 0; i < arrayObejetos.length; i++) {
+      console.log('teste', i,arrayObejetos[i]  )
+
+   }
+
+   function exibirLista(items) {
+    console.log(items)
+   }
 
 })
+
