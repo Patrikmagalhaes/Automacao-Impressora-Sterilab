@@ -70,7 +70,7 @@ def index():
         
         thread = threading.Thread(target=agendar_impressao, args=(dia_semana, hora, minuto, copias,  caminho, impressora))
         thread.start()
-        return jsonify(f"Impressão agendada com sucesso!", data), 200
+        return jsonify(True), 200
     else:
         return render_template('index.html')
 

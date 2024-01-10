@@ -1,5 +1,7 @@
+import {dados} from "./enviarDados"
+
 document.addEventListener("DOMContentLoaded", ()=>{
-    const valores = localStorage.getItem("impressoes")
-    const arrayObjeto = JSON.parse(valores)
-    document.getElementById("test").textContent = arrayObjeto[0]["diaSemana"]
+   let dadosLocal = localStorage.getItem(dados.nomeTarefa)
+   console.log(dadosLocal)
+
 })

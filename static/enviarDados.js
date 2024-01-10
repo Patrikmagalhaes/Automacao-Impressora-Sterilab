@@ -1,7 +1,7 @@
-
-let impressoes = []
-function adicionartarefa(objetoImpressoes) {
-    localStorage.setItem("impressoes", JSON.stringify(objetoImpressoes))
+let dados = []
+function salvarDados() {
+localStorage.setItem(dados.nomeTarefa, JSON.stringify(dados))
+dados = []
 }
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/selecionar_impressora")
@@ -28,25 +28,30 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
     e.preventDefault()
     const form = document.getElementById("impressaoForm");
     const impressora = document.getElementById("impressorasSelect")
+
+    dados =
+    {
+        diaSemana: form.diaSemana.value,
+        hora: form.hora.value,
+        minuto: form.minuto.value,
+        copias: form.copias.value,
+        caminhoPasta: form.caminhoPasta.value,
+        impressora: impressora.value,
+        nomeTarefa: form.nomeTarefa.value,
+    }
+
+
     fetch("/", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            diaSemana: form.diaSemana.value,
-            hora: form.hora.value,
-            minuto: form.minuto.value,
-            copias: form.copias.value,
-            caminhoPasta: form.caminhoPasta.value,
-            impressora: impressora.value
-        }),
+        body: JSON.stringify(
+            dados
+        ),
     })
-        .then(response => response.json())
-        .then(data => {
-            impressoes.push(data[1])
-            adicionartarefa(impressoes)
-        })
+        .then(() => salvarDados())
+       
         .catch(error => {
             console.error('Erro ao enviar os dados:', error);
         });
