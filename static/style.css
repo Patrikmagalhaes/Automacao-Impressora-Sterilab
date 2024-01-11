@@ -69,7 +69,16 @@ form {
     align-items: center;
     justify-content: center;
 }
+ul{
+    list-style: none;
+    margin: 20px;
+    border-bottom: 1px solid black;
 
+}
+li{
+    margin: 10px;
+    font-weight: bold;
+}
 h1 {
     color: #007bff;
 }
@@ -79,5 +88,4 @@ footer {
     background-color: #007bff10;
     padding: 4px;
     color: #000000;
-  
 }

@@ -40,7 +40,6 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
         nomeTarefa: form.nomeTarefa.value,
     }
 
-
     fetch("/", {
         method: 'POST',
         headers: {
@@ -51,7 +50,7 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
         ),
     })
         .then(() => salvarDados())
-       
+    
         .catch(error => {
             console.error('Erro ao enviar os dados:', error);
         });

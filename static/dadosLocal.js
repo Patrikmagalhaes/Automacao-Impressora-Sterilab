@@ -9,25 +9,38 @@ document.addEventListener("DOMContentLoaded", () => {
    }
 
    for (i = 0; i < arrayObejetos.length; i++) {
-      exibirLista(arrayObejetos, i)
+      extrairDados(arrayObejetos, i)
    }
-   
-   function exibirLista(objetos, indiceObjeto) {
 
-      let ulElement = document.createElement('ul')
-      listElement.appendChild(ulElement)
-      const liElement = document.createElement('li')
+   function extrairDados(objetos, indiceObjeto) {
 
       const diaSemana = objetos[indiceObjeto]["diaSemana"]
       const hora = objetos[indiceObjeto]["hora"]
       const caminhoPasta = objetos[indiceObjeto]["caminhoPasta"]
       const impressora = objetos[indiceObjeto]["impressora"]
 
-      ulElement.appendChild(liElement)
-
-      liElement.textContent = diaSemana
-      liElement.textContent = diaSemana
-    
+      criarElementos(diaSemana, hora, caminhoPasta, impressora)
    }
+
+   function criarElementos(diaSemana, hora, caminhoPasta, impressora) {
+      let ulElement = document.createElement('ul')
+      listElement.appendChild(ulElement)
+
+      const liDiaSemana = document.createElement('li')
+      const liHora = document.createElement('li')
+      const liCaminhoPasta = document.createElement('li')
+      const liImpressora = document.createElement('li')
+
+      ulElement.appendChild(liDiaSemana)
+      ulElement.appendChild(liHora)
+      ulElement.appendChild(liCaminhoPasta)
+      ulElement.appendChild(liImpressora)
+
+      liDiaSemana.textContent = diaSemana
+      liHora.textContent = hora
+      liCaminhoPasta.textContent = caminhoPasta
+      liImpressora.textContent = impressora
+   }
+
 })
 
