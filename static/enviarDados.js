@@ -1,8 +1,12 @@
 let dados = []
+
 function salvarDados() {
-localStorage.setItem(dados.nomeTarefa, JSON.stringify(dados))
-dados = []
+
+    localStorage.setItem(dados.nomeTarefa, JSON.stringify(dados))
+    dados = []
+console.log("salvarDados")
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/selecionar_impressora")
         .then(response => response.json())
@@ -24,8 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Erro ao fazer a solicitação para obter a lista de impressoras.", error);
         });
 });
+
 document.getElementById("impressaoForm").addEventListener("submit", function (e) {
     e.preventDefault()
+
     const form = document.getElementById("impressaoForm");
     const impressora = document.getElementById("impressorasSelect")
 
@@ -38,6 +44,7 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
         caminhoPasta: form.caminhoPasta.value,
         impressora: impressora.value,
         nomeTarefa: form.nomeTarefa.value,
+        status: false
     }
 
     fetch("/", {
@@ -48,9 +55,8 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
         body: JSON.stringify(
             dados
         ),
-    })
-        .then(() => salvarDados())
-    
+    }).then(response => response.json())
+        .then(data => {salvarDados()})
         .catch(error => {
             console.error('Erro ao enviar os dados:', error);
         });
