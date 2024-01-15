@@ -44,7 +44,7 @@ document.getElementById("impressaoForm").addEventListener("submit", function (e)
         caminhoPasta: form.caminhoPasta.value,
         impressora: impressora.value,
         nomeTarefa: form.nomeTarefa.value,
-        status: false
+        status: true
     }
 
     fetch("/", {

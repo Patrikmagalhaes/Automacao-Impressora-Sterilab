@@ -1,7 +1,6 @@
 let arrayObejetos = []
 let listElement = document.getElementById('lista')
 
-
 document.addEventListener("DOMContentLoaded", () => {
     for (let chave of Object.keys(localStorage)) {
         let valor = JSON.parse(localStorage.getItem(chave))
@@ -16,13 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const diaSemana = objetos[indiceObjeto]["diaSemana"]
         const hora = objetos[indiceObjeto]["hora"]
+        const minuto = objetos[indiceObjeto]["minuto"]
         const caminhoPasta = objetos[indiceObjeto]["caminhoPasta"]
         const impressora = objetos[indiceObjeto]["impressora"]
 
-        criarElementos(diaSemana, hora, caminhoPasta, impressora, objetos, indiceObjeto)
+
+        criarElementos(diaSemana, hora, minuto, caminhoPasta, impressora, objetos, indiceObjeto)
     }
 
-    function criarElementos(diaSemana, hora, caminhoPasta, impressora, objetos, indiceObjeto) {
+    function criarElementos(diaSemana, hora, minuto, caminhoPasta, impressora, objetos, indiceObjeto) {
         let ulElement = document.createElement('ul')
         listElement.appendChild(ulElement)
 
@@ -49,11 +50,35 @@ document.addEventListener("DOMContentLoaded", () => {
         ulElement.appendChild(botaoExcluir)
 
         excluirItem(objetos, indiceObjeto, botaoExcluir, ulElement)
+        removerTarefaFinalizada(diaSemana, hora, minuto)
+
+    }
+
+    function removerTarefaFinalizada(diaSemana, hora, minuto) {
+
+        const semanaString = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado']
+
+        for (i = 0; i <= semanaString.length; i++) {
+
+            if (semanaString[i] == diaSemana) {
+                diaSemana = i
+            }
+        }
+
+        const tempoAtual = new Date()
+        const hoje = tempoAtual.getDay()
+        const horaAtual = tempoAtual.getHours()
+        const minutoAtual = tempoAtual.getMinutes()
+        
+        console.log("hora atual:", hora, minutoAtual)
+
+        if (hoje == diaSemana && horaAtual >= hora && minutoAtual >= minuto) {
+
+        }
 
     }
 
     function excluirItem(objetos, indiceObjeto, botaoExcluir, ulElement) {
-
         botaoExcluir.addEventListener('click', () => {
             localStorage.removeItem(objetos[indiceObjeto]['nomeTarefa'])
             listElement.removeChild(ulElement)
@@ -72,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({nomeTarefa, statusFalse})
+            body: JSON.stringify({ nomeTarefa, statusFalse })
         }
         )
     }
