@@ -50,11 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ulElement.appendChild(botaoExcluir)
 
         excluirItem(objetos, indiceObjeto, botaoExcluir, ulElement)
-        removerTarefaFinalizada(diaSemana, hora, minuto)
+        //removerTarefaFinalizada(diaSemana, hora, minuto)
 
     }
 
-    function removerTarefaFinalizada(diaSemana, hora, minuto) {
+   /* function removerTarefaFinalizada(diaSemana, hora, minuto) {
 
         const semanaString = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado']
 
@@ -73,10 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("hora atual:", hora, minutoAtual)
 
         if (hoje == diaSemana && horaAtual >= hora && minutoAtual >= minuto) {
-
+            console.log("(_._)")
         }
 
-    }
+    }*/
 
     function excluirItem(objetos, indiceObjeto, botaoExcluir, ulElement) {
         botaoExcluir.addEventListener('click', () => {
